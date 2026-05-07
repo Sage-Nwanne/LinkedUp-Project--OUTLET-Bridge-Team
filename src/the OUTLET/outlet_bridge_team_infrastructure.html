@@ -1,0 +1,338 @@
+
+<h2 class="sr-only">OUTLET Bridge Team interactive infrastructure diagram covering the 7-stage pipeline, team structure, OPP system, and policies.</h2>
+<style>
+.tabs{display:flex;gap:2px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:20px;overflow-x:auto}
+.tb{padding:8px 14px;font-size:13px;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;color:var(--color-text-secondary);transition:all .15s;margin-bottom:-1px;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.tb.active{color:var(--color-text-primary);border-bottom-color:var(--color-text-primary);font-weight:500}
+.tb:hover:not(.active){color:var(--color-text-primary);background:var(--color-background-secondary)}
+.tc{display:none}.tc.active{display:block}
+.stages{display:flex;gap:5px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px}
+.sc{flex:1;min-width:78px;padding:10px 8px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);cursor:pointer;transition:all .18s;text-align:center;background:var(--color-background-secondary)}
+.sc:hover,.sc.sel{border-color:var(--color-border-primary);background:var(--color-background-primary)}
+.sc.sel{border-width:1.5px}
+.sc-num{font-size:10px;color:var(--color-text-tertiary);margin-bottom:3px}
+.sc-name{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.sc-icon{font-size:16px;color:var(--color-text-secondary);margin-bottom:5px}
+.sd{display:none;padding:14px 16px;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
+.sd.active{display:block}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.dc{padding:10px 12px;border-radius:var(--border-radius-md);background:var(--color-background-secondary)}
+.dl{font-size:11px;color:var(--color-text-secondary);margin-bottom:3px;display:flex;align-items:center;gap:4px}
+.dv{font-size:12px;color:var(--color-text-primary);line-height:1.45}
+.opp-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;justify-content:center;margin:16px 0 12px}
+.os{flex:1;min-width:90px;padding:12px 8px;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);text-align:center;cursor:pointer;transition:all .18s}
+.os:hover,.os.sel{border-color:var(--color-border-primary);background:var(--color-background-primary)}
+.os.sel{border-width:1.5px}
+.os-icon{font-size:18px;color:var(--color-text-secondary);margin-bottom:4px}
+.os-name{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.os-sub{font-size:10px;color:var(--color-text-secondary);margin-top:2px}
+.od{display:none;padding:14px 16px;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
+.od.active{display:block}
+.lvl{display:flex;flex-direction:column;align-items:center;gap:0;width:100%}
+.lv{width:100%;padding:10px 14px;border-radius:var(--border-radius-md);font-size:13px;font-weight:500;text-align:center;border:0.5px solid var(--color-border-tertiary);box-sizing:border-box}
+.vl{width:1px;height:16px;background:var(--color-border-secondary)}
+.crow{display:flex;gap:6px;width:100%;justify-content:center}
+.cn{flex:1;display:flex;flex-direction:column;align-items:center;gap:0}
+.cncard{width:100%;padding:8px 8px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);font-size:11px;text-align:center;cursor:pointer;transition:all .15s;box-sizing:border-box}
+.cncard:hover{background:var(--color-background-primary);border-color:var(--color-border-primary)}
+.hbar{width:calc(100% - 16px);height:1px;background:var(--color-border-secondary);margin:0 8px}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pc{padding:14px 16px;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+.pt{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.pi{display:flex;align-items:flex-start;gap:7px;margin-bottom:7px}
+.pn{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.pd{font-size:12px;color:var(--color-text-secondary);line-height:1.4}
+.badge{padding:3px 8px;border-radius:var(--border-radius-md);font-size:11px;font-weight:500}
+.arr-icon{color:var(--color-text-tertiary);font-size:14px}
+</style>
+
+<div style="padding:4px 0">
+<div class="tabs">
+  <button class="tb active" onclick="showTab(this,'pipeline')"><i class="ti ti-git-branch" aria-hidden="true"></i> Pipeline</button>
+  <button class="tb" onclick="showTab(this,'team')"><i class="ti ti-users" aria-hidden="true"></i> Team</button>
+  <button class="tb" onclick="showTab(this,'opp')"><i class="ti ti-refresh" aria-hidden="true"></i> OPP system</button>
+  <button class="tb" onclick="showTab(this,'policies')"><i class="ti ti-shield-check" aria-hidden="true"></i> Policies</button>
+</div>
+
+<div class="tc active" id="tab-pipeline">
+  <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:12px">Select a stage to explore goals, team ownership, metrics, and friction points.</p>
+  <div class="stages" id="stage-row"></div>
+  <div id="stage-details"></div>
+</div>
+
+<div class="tc" id="tab-team">
+  <div id="team-chart"></div>
+</div>
+
+<div class="tc" id="tab-opp">
+  <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px">The OPP runs like a CI/CD pipeline — each event cycle improves the system. Select a phase.</p>
+  <div class="opp-row" id="opp-steps"></div>
+  <div id="opp-details"></div>
+  <div style="margin-top:16px;padding:12px 14px;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary)">
+    <p style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px">Software CI/CD → OPP equivalent</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div style="font-size:11px;color:var(--color-text-tertiary)">Code → Test → Deploy → Monitor → Improve</div>
+      <div style="font-size:11px;color:var(--color-text-tertiary)">Event → Observe → Analyze → Refine → Re-deploy</div>
+    </div>
+  </div>
+</div>
+
+<div class="tc" id="tab-policies">
+  <div id="policies-content"></div>
+</div>
+</div>
+
+<script>
+const stages=[
+  {num:1,name:'Awareness',icon:'ti-broadcast',
+   tag:'Entry',tagBg:'var(--color-background-info)',tagC:'var(--color-text-info)',
+   goal:'Generate curiosity and lower barriers to attendance',
+   team:'Social media, friends, campus outreach, church announcements',
+   metric:'RSVP conversion rate · first-time visitor rate · reach vs attendance',
+   friction:'Unclear messaging, no invite culture, low social reach',
+   output:'First-time attendees show up to an OUTLET event'},
+  {num:2,name:'Arrival',icon:'ti-door-enter',
+   tag:'Entry',tagBg:'var(--color-background-info)',tagC:'var(--color-text-info)',
+   goal:'Greet every attendee, reduce awkwardness, prevent isolation',
+   team:'Hospitality Team · Connection Coordinators',
+   metric:'Nobody sits alone · every attendee acknowledged within 3 minutes',
+   friction:'Missed first-timers, cliquish volunteers, cold entry environment',
+   output:'Attendee feels seen and emotionally open to connection'},
+  {num:3,name:'Connection',icon:'ti-heart-handshake',
+   tag:'Bridge',tagBg:'var(--color-background-success)',tagC:'var(--color-text-success)',
+   goal:'Form social comfort, identify similarities, create conversations',
+   team:'Connection Coordinators · all Bridge Team members',
+   metric:'New introductions made · attendee returns at least once more',
+   friction:'Forced conversations, surface-level interaction, no follow-up',
+   output:'Attendee meets compatible people and wants to return'},
+  {num:4,name:'Matching',icon:'ti-arrows-join',
+   tag:'Bridge',tagBg:'var(--color-background-success)',tagC:'var(--color-text-success)',
+   goal:'Match attendees to Connect Groups by fit, not random assignment',
+   team:'Group Match Coordinators',
+   metric:'Connect Group conversion rate · recommendation acceptance rate',
+   friction:'Poor fit, wrong group type, pressure-based placement tactics',
+   output:'A personalized, low-pressure group invitation is extended'},
+  {num:5,name:'Trial',icon:'ti-test-pipe',
+   tag:'Bridge',tagBg:'var(--color-background-success)',tagC:'var(--color-text-success)',
+   goal:'Free exploration — no guilt, no commitment pressure',
+   team:'Bridge Team · Connect Group Leaders',
+   metric:'Trial participation rate · group switch rate (healthy if nonzero)',
+   friction:'Commitment pressure, awkward re-entry, lack of post-trial follow-up',
+   output:'Attendee finds a group environment that genuinely fits'},
+  {num:6,name:'Retention',icon:'ti-anchor',
+   tag:'Depth',tagBg:'var(--color-background-warning)',tagC:'var(--color-text-warning)',
+   goal:'Build emotional safety, recurring participation, and ownership',
+   team:'Follow-Up Coordinators · Connect Group Leaders',
+   metric:'Repeat attendance rate · relationship depth signals · leader responsiveness',
+   friction:'Inconsistent follow-up, leader burnout, clique formation',
+   output:'Attendee becomes a consistently connected community member'},
+  {num:7,name:'Leadership',icon:'ti-star',
+   tag:'Depth',tagBg:'var(--color-background-warning)',tagC:'var(--color-text-warning)',
+   goal:'Community members become volunteers, connectors, and future leaders',
+   team:'Executive Leadership · Bridge Team Lead',
+   metric:'Volunteer conversion rate · new Connect Group leader count',
+   friction:'No clear pathway, ignored potential, no leadership development culture',
+   output:'The system reproduces itself — new Bridge Team members emerge'}
+];
+
+const oppSteps=[
+  {name:'Event',icon:'ti-calendar-event',sub:'Deploy the experience',
+   detail:'Every OUTLET event is a live deployment of the human connection system — a real test of hospitality flow, volunteer coordination, group recommendations, and follow-up readiness.',
+   qs:['Who showed up?','Who was isolated?','How was volunteer coverage?']},
+  {name:'Observe',icon:'ti-eye',sub:'Real-time data gathering',
+   detail:'During and immediately after each event, Bridge Team members actively observe who is sitting alone, who is engaging, which conversations form naturally, and which attendees seem overwhelmed or hesitant.',
+   qs:['Who left early?','What social clusters formed?','Where were the friction points?']},
+  {name:'Analyze',icon:'ti-chart-line',sub:'Post-event review',
+   detail:'The weekly review meeting is the analysis phase. The team reviews attendee retention, isolated individuals, volunteer effectiveness, Connect Group feedback, and overall event friction.',
+   qs:['What worked?','What failed?','Who slipped through the cracks?']},
+  {name:'Refine',icon:'ti-tool',sub:'System improvement',
+   detail:'Based on analysis, the team refines onboarding scripts, volunteer positioning, follow-up cadence, group match criteria, and communication workflows. Small improvements compound.',
+   qs:['What process change prevents this failure?','Which leader needs coaching?']},
+  {name:'Re-deploy',icon:'ti-rocket',sub:'Next cycle launch',
+   detail:'The improved system re-deploys at the next event. The OPP loop never stops — every cycle makes the infrastructure more relational, more effective, and more personal.',
+   qs:['Is the team briefed on changes?','Are new volunteers trained on refinements?']}
+];
+
+function renderPipeline(){
+  const row=document.getElementById('stage-row');
+  const det=document.getElementById('stage-details');
+  row.innerHTML=stages.map((s,i)=>`
+    <div class="sc" id="sc-${i}" onclick="selStage(${i})">
+      <div class="sc-icon"><i class="ti ${s.icon}" aria-hidden="true"></i></div>
+      <div class="sc-num">Stage ${s.num}</div>
+      <div class="sc-name">${s.name}</div>
+    </div>`).join('');
+  det.innerHTML=stages.map((s,i)=>`
+    <div class="sd" id="sd-${i}">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span class="badge" style="background:${s.tagBg};color:${s.tagC}">${s.tag}</span>
+        <span style="font-size:15px;font-weight:500;color:var(--color-text-primary)"><i class="ti ${s.icon}" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"></i>${s.name}</span>
+      </div>
+      <div class="dg">
+        <div class="dc"><div class="dl"><i class="ti ti-target" aria-hidden="true"></i> Goal</div><div class="dv">${s.goal}</div></div>
+        <div class="dc"><div class="dl"><i class="ti ti-users" aria-hidden="true"></i> Responsible team</div><div class="dv">${s.team}</div></div>
+        <div class="dc"><div class="dl"><i class="ti ti-chart-bar" aria-hidden="true"></i> Key metrics</div><div class="dv">${s.metric}</div></div>
+        <div class="dc"><div class="dl"><i class="ti ti-alert-circle" aria-hidden="true"></i> Friction points</div><div class="dv">${s.friction}</div></div>
+      </div>
+      <div style="margin-top:8px;padding:8px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);display:flex;align-items:flex-start;gap:6px">
+        <i class="ti ti-arrow-right" style="font-size:13px;color:var(--color-text-tertiary);margin-top:1px" aria-hidden="true"></i>
+        <span style="font-size:12px;color:var(--color-text-secondary)">${s.output}</span>
+      </div>
+      <button style="margin-top:10px;font-size:12px" onclick="sendPrompt('Tell me more about Stage ${s.num}: ${s.name} in the OUTLET Bridge Team pipeline — what does the team actually do at this stage?')">Explore this stage ↗</button>
+    </div>`).join('');
+  selStage(0);
+}
+
+function selStage(i){
+  document.querySelectorAll('.sc').forEach((c,j)=>c.classList.toggle('sel',i===j));
+  document.querySelectorAll('.sd').forEach((d,j)=>d.classList.toggle('active',i===j));
+}
+
+function renderTeam(){
+  document.getElementById('team-chart').innerHTML=`
+    <div class="lvl">
+      <div class="lv" style="background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info);max-width:260px">
+        <i class="ti ti-crown" aria-hidden="true"></i> Ministry leadership
+        <div style="font-size:10px;font-weight:400;margin-top:2px;opacity:.8">Vision · approvals · pastoral oversight</div>
+      </div>
+      <div class="vl"></div>
+      <div class="lv" style="background:var(--color-background-warning);color:var(--color-text-warning);border-color:var(--color-border-warning);max-width:260px">
+        <i class="ti ti-adjustments" aria-hidden="true"></i> Bridge Team Lead
+        <div style="font-size:10px;font-weight:400;margin-top:2px;opacity:.8">Pipeline ownership · volunteer coordination</div>
+      </div>
+      <div class="vl"></div>
+      <div class="hbar"></div>
+      <div class="crow" style="margin-top:0">
+        ${[
+          {n:'Connection coordinators',i:'ti-heart-handshake',s:'Introductions · isolation prevention'},
+          {n:'Follow-up coordinators',i:'ti-message-circle',s:'Texts · check-ins · continuity'},
+          {n:'Group match coordinators',i:'ti-arrows-join',s:'Compatibility · recommendations'},
+          {n:'Operations coordinators',i:'ti-database',s:'Tracking · forms · reporting'},
+        ].map(r=>`
+          <div class="cn">
+            <div class="vl"></div>
+            <div class="cncard" onclick="sendPrompt('What does the role of ${r.n} involve in the OUTLET Bridge Team?')">
+              <i class="ti ${r.i}" style="font-size:14px" aria-hidden="true"></i>
+              <div style="font-size:11px;font-weight:500;color:var(--color-text-primary);margin-top:3px">${r.n}</div>
+              <div style="font-size:10px;color:var(--color-text-secondary);margin-top:2px">${r.s}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div style="margin-top:14px;width:100%">
+        <p style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px">Supporting roles</p>
+        <div style="display:flex;gap:8px">
+          <div style="flex:1;padding:10px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-success);background:var(--color-background-success);color:var(--color-text-success);font-size:12px;text-align:center">
+            <i class="ti ti-users-group" aria-hidden="true"></i>
+            <div style="font-weight:500;margin-top:3px">Connect Group Leaders</div>
+            <div style="font-size:10px;margin-top:2px;opacity:.8">Environments · safety · retention</div>
+          </div>
+          <div style="flex:1;padding:10px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:12px;text-align:center">
+            <i class="ti ti-door" aria-hidden="true"></i>
+            <div style="font-weight:500;margin-top:3px">Hospitality Team</div>
+            <div style="font-size:10px;color:var(--color-text-secondary);margin-top:2px">Greetings · first impressions</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:12px;padding:10px 12px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);width:100%;box-sizing:border-box">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0"><i class="ti ti-arrow-right" aria-hidden="true"></i> Communication flow: Attendee → Volunteer → Coordinator → Bridge Team Lead → Ministry Leadership</p>
+      </div>
+    </div>`;
+}
+
+function renderOPP(){
+  const sr=document.getElementById('opp-steps');
+  const dr=document.getElementById('opp-details');
+  sr.innerHTML=oppSteps.map((s,i)=>`
+    ${i>0?'<i class="ti ti-arrow-right arr-icon" aria-hidden="true"></i>':''}
+    <div class="os" id="os-${i}" onclick="selOPP(${i})">
+      <div class="os-icon"><i class="ti ${s.icon}" aria-hidden="true"></i></div>
+      <div class="os-name">${s.name}</div>
+      <div class="os-sub">${s.sub}</div>
+    </div>`).join('');
+  dr.innerHTML=oppSteps.map((s,i)=>`
+    <div class="od" id="od-${i}">
+      <p style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px"><i class="ti ${s.icon}" style="margin-right:5px;vertical-align:-2px" aria-hidden="true"></i>${s.name} — ${s.sub}</p>
+      <p style="font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:10px">${s.detail}</p>
+      <p style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px">Key review questions:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">
+        ${s.qs.map(q=>`<span style="padding:3px 9px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);font-size:11px;color:var(--color-text-secondary)">${q}</span>`).join('')}
+      </div>
+      <button style="font-size:12px" onclick="sendPrompt('How does the ${s.name} phase work in the OUTLET Pipeline Protocol?')">Explore this phase ↗</button>
+    </div>`).join('');
+  selOPP(0);
+}
+
+function selOPP(i){
+  document.querySelectorAll('.os').forEach((s,j)=>s.classList.toggle('sel',i===j));
+  document.querySelectorAll('.od').forEach((d,j)=>d.classList.toggle('active',i===j));
+}
+
+function renderPolicies(){
+  document.getElementById('policies-content').innerHTML=`
+    <div class="pg">
+      <div class="pc">
+        <div class="pt"><i class="ti ti-heart" aria-hidden="true"></i> Behavioral standards</div>
+        ${[
+          {i:'ti-door',n:'Welcoming',d:'People feel safe approaching any volunteer at any time.'},
+          {i:'ti-eye',n:'Observant',d:'Actively notice isolation, awkwardness, and discomfort.'},
+          {i:'ti-users-minus',n:'Non-cliquish',d:'No exclusive circles, insider language, or visible favoritism.'},
+          {i:'ti-brain',n:'Emotionally intelligent',d:'Read social energy, recognize discomfort, and adapt.'},
+          {i:'ti-message-forward',n:'Invitational',d:'No attendee should ever feel like they are intruding.'},
+        ].map(p=>`<div class="pi"><i class="ti ${p.i}" style="font-size:14px;color:var(--color-text-secondary);margin-top:1px" aria-hidden="true"></i><div><span class="pn">${p.n}</span><span class="pd"> — ${p.d}</span></div></div>`).join('')}
+      </div>
+      <div class="pc">
+        <div class="pt"><i class="ti ti-arrow-up" aria-hidden="true"></i> Escalation chain</div>
+        ${[
+          {l:'Minor issue',p:'Volunteer → Coordinator',bg:'var(--color-background-secondary)',c:'var(--color-text-secondary)'},
+          {l:'Operational',p:'Coordinator → Bridge Team Lead',bg:'var(--color-background-warning)',c:'var(--color-text-warning)'},
+          {l:'Sensitive/pastoral',p:'Bridge Team Lead → Ministry Leadership',bg:'var(--color-background-danger)',c:'var(--color-text-danger)'},
+        ].map(e=>`
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px">
+            <span class="badge" style="background:${e.bg};color:${e.c};white-space:nowrap">${e.l}</span>
+            <span style="font-size:12px;color:var(--color-text-secondary)">${e.p}</span>
+          </div>`).join('')}
+        <div style="border-top:0.5px solid var(--color-border-tertiary);padding-top:10px;margin-top:4px">
+          <p style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px">Follow-up cadence</p>
+          ${['Same-night connection','Mid-week follow-up','Pre-group reminder','Post-group check-in'].map((c,i)=>`
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+              <span style="font-size:10px;color:var(--color-text-tertiary);min-width:12px">${i+1}.</span>
+              <span style="font-size:12px;color:var(--color-text-secondary)">${c}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="pc">
+        <div class="pt"><i class="ti ti-shield-check" aria-hidden="true"></i> Failsafes</div>
+        ${[
+          {i:'ti-users',n:'Human review layer',d:'All major decisions require real human discernment and empathy.'},
+          {i:'ti-user-check',n:'Multi-person verification',d:'No single person controls placement or conflict decisions.'},
+          {i:'ti-alert-triangle',n:'Social safety monitoring',d:'Watch for exclusion, favoritism, burnout, gossip, and cliques.'},
+          {i:'ti-lock',n:'Privacy protection',d:'Never document private or traumatic disclosures.'},
+        ].map(f=>`<div class="pi"><i class="ti ${f.i}" style="font-size:14px;color:var(--color-text-secondary);margin-top:1px" aria-hidden="true"></i><div><span class="pn">${f.n}</span><span class="pd"> — ${f.d}</span></div></div>`).join('')}
+      </div>
+      <div class="pc">
+        <div class="pt"><i class="ti ti-alert-circle" aria-hidden="true"></i> Failure protocols</div>
+        ${[
+          {i:'ti-users-minus',n:'Clique formation',d:'Leadership intervenes, inclusion reinforced, social bridges rebuilt.'},
+          {i:'ti-mood-sad',n:'Volunteer burnout',d:'Rotate responsibilities, provide support, reduce overcommitment.'},
+          {i:'ti-shield-x',n:'Unsafe environment',d:'Manipulation or harmful conduct escalated immediately, no exceptions.'},
+          {i:'ti-user-minus',n:'Attendee ghosting',d:'Respectful follow-up only — care without pressure or guilt.'},
+        ].map(f=>`<div class="pi"><i class="ti ${f.i}" style="font-size:14px;color:var(--color-text-secondary);margin-top:1px" aria-hidden="true"></i><div><span class="pn">${f.n}</span><span class="pd"> — ${f.d}</span></div></div>`).join('')}
+      </div>
+    </div>
+    <div style="margin-top:10px;padding:12px 16px;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);text-align:center">
+      <p style="font-size:13px;font-style:italic;color:var(--color-text-secondary);margin:0">People over metrics. Relationships over attendance. Belonging over performance.</p>
+    </div>`;
+}
+
+function showTab(btn,name){
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tc').forEach(c=>c.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+renderPipeline();
+renderTeam();
+renderOPP();
+renderPolicies();
+</script>
