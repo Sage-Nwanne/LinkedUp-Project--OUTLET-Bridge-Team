@@ -63,6 +63,9 @@ const PATHS = {
     <circle cx="12" cy="12" r="5" />
     <circle cx="12" cy="12" r="1.5" />
   </>,
+  download: <>
+    <path d="M12 3v10M5 14h14l-7 6 7-6M19 14v4H5v-4" />
+  </>,
 };
 
 const FILLED = new Set([]);

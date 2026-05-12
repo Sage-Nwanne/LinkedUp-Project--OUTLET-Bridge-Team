@@ -10,6 +10,7 @@ import Communication from './sections/Communication.jsx';
 import Protocol from './sections/Protocol.jsx';
 import Loop from './sections/Loop.jsx';
 import Mvp from './sections/Mvp.jsx';
+import Onboarding from './sections/Onboarding.jsx';
 import DocsDrawer from './components/DocsDrawer.jsx';
 
 export default function App() {
@@ -46,6 +47,7 @@ export default function App() {
         <Protocol />
         <Loop />
         <Mvp onOpenDocs={() => setDocsOpen(true)} />
+        <Onboarding />
       </main>
       <footer className="footer">
         <div className="container footer__inner">
