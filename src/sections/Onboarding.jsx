@@ -11,14 +11,13 @@ export default function Onboarding() {
         </div>
 
         <div className="onboarding-video">
-          <video
-            controls
+          <iframe
             className="onboarding-video__player"
-            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Crect fill='%23f0ede8' width='1280' height='720'/%3E%3C/svg%3E"
-          >
-            <source src="/Recorded-session-BridgeTeam-OnboardingMeeting.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+            src="https://www.youtube.com/embed/8Ves53xb_WE"
+            title="OUTLET Bridge Team Onboarding & Leadership Meeting"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
         </div>
 
         <div className="onboarding-cta">
